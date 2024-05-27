@@ -16,7 +16,7 @@ fi
 
 # Netplan 설정 파일 생성
 echo "Creating Netplan configuration file..."
-sudo tee . > /dev/null <<EOL
+sudo tee /etc/netplan/01-netcfg.yaml > /dev/null <<EOL
 network:
   ethernets:
     ens192:
