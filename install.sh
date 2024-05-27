@@ -50,34 +50,34 @@ d2="${ip2[3]}"
 check_ip_in_use "192.168.$c.$d1"
 check_ip_in_use "192.168.5.$d2"
 
-# Create the Netplan configuration files
-cat <<EOF | sudo tee /etc/netplan/01-ens192-installer-config.yaml > /dev/null
-network:
-  ethernets:
-    ens192:
-      addresses:
-      - 192.168.$c.$d1/24
-      nameservers:
-        addresses:
-        - 1.1.1.1
-      routes:
-      - to: default
-        via: 192.168.1.1
-EOF
+# # Create the Netplan configuration files
+# cat <<EOF | sudo tee /etc/netplan/01-ens192-installer-config.yaml > /dev/null
+# network:
+#   ethernets:
+#     ens192:
+#       addresses:
+#       - 192.168.$c.$d1/24
+#       nameservers:
+#         addresses:
+#         - 1.1.1.1
+#       routes:
+#       - to: default
+#         via: 192.168.1.1
+# EOF
 
-cat <<EOF | sudo tee /etc/netplan/02-ens192-vlan5-installer-config.yaml > /dev/null
-network:
-  vlans:
-    ens192.5:
-      id: 5
-      link: ens192
-      addresses: [192.168.5.$d2/24]
-      routes:
-        - to: 0.0.0.0/0
-          via: 192.168.5.1
-          metric: 100
-  version: 2
-EOF
+# cat <<EOF | sudo tee /etc/netplan/02-ens192-vlan5-installer-config.yaml > /dev/null
+# network:
+#   vlans:
+#     ens192.5:
+#       id: 5
+#       link: ens192
+#       addresses: [192.168.5.$d2/24]
+#       routes:
+#         - to: 0.0.0.0/0
+#           via: 192.168.5.1
+#           metric: 100
+#   version: 2
+# EOF
 
-# Apply the Netplan configuration
-sudo netplan try && sudo netplan apply
+# # Apply the Netplan configuration
+# sudo netplan try && sudo netplan apply
