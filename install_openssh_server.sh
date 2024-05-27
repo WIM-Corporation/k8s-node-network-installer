@@ -20,8 +20,19 @@ if command -v ufw > /dev/null; then
     sudo ufw reload
 fi
 
+# SSH 설정 파일 편집
+echo "Configuring SSH settings..."
+sudo sed -i 's/#Port 22/Port 22/' /etc/ssh/sshd_config
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+sudo sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+
+# SSH 서비스 재시작
+echo "Restarting SSH service to apply changes..."
+sudo systemctl restart ssh
+
 # 상태 확인
-echo "OpenSSH server installation completed. Checking SSH service status..."
+echo "OpenSSH server installation and configuration completed. Checking SSH service status..."
 sudo systemctl status ssh
 
-echo "OpenSSH server is now installed and running."
+echo "OpenSSH server is now installed, configured, and running."
