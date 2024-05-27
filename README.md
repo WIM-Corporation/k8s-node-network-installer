@@ -7,7 +7,7 @@ Initializes a k8s node network configuration.
 ## Install openssh server
 
 ```bash
-./configure-ssh.sh
+./install_openssh_server.sh
 ```
 
 ## Set netplan
