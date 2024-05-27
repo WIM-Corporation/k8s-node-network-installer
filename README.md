@@ -2,16 +2,24 @@
 
 https://github.com/WIM-Corporation/k8s-node-network-installer.git
 
-초기화 과정은 다음과 같습니다.
+Initializes a k8s node network configuration.
 
-## openssh server 설치
+## Install openssh server
 
 ```bash
 ./configure-ssh.sh
 ```
 
-## netplan 설정
+## Set netplan
 
 ```bash
 ./configure_netplan.sh 192.168.1.<d-record-1> 192.168.5.<d-record-2>
 ```
+
+## Update hostname
+
+```bash
+./update-hostname.sh <new_hostname>
+```
+
+If the hostname is successfully changed, the login session will be terminated.
