@@ -27,4 +27,9 @@ echo "Hostname successfully changed to $new_host_name"
 
 # 로그인 세션 종료
 echo "Ending login session..."
-exit
+
+if [ "$SHELL" == "/bin/bash" ]; then
+  kill -HUP $PPID
+else
+  logout
+fi
