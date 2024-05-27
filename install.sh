@@ -20,17 +20,16 @@ check_ip_in_use() {
 
 # Check if two arguments are provided
 if [ "$#" -ne 2 ]; then
-  echo "Usage: $0 <192.168.c.d> <192.168.5.d>"
+  echo "Usage: $0 <192.168.1.d> <192.168.5.d>"
   exit 1
 fi
 
 # Extract and validate components of the first IP
 IFS='.' read -r -a ip1 <<< "$1"
-if [ "${ip1[0]}" != "192" ] || [ "${ip1[1]}" != "168" ]; then
+if [ "${ip1[0]}" != "192" ] || [ "${ip1[1]}" != "168" ] || [ "${ip1[2]}" != "1" ]; then
   echo "Invalid IP format: $1"
   exit 1
 fi
-validate_ip_component "${ip1[2]}"
 validate_ip_component "${ip1[3]}"
 
 # Extract and validate components of the second IP
@@ -42,12 +41,11 @@ fi
 validate_ip_component "${ip2[3]}"
 
 # Assign variables for easier reference
-c="${ip1[2]}"
 d1="${ip1[3]}"
 d2="${ip2[3]}"
 
 # Check if the IPs are in use
-check_ip_in_use "192.168.$c.$d1"
+check_ip_in_use "192.168.1.$d1"
 check_ip_in_use "192.168.5.$d2"
 
 # # Create the Netplan configuration files
@@ -56,7 +54,7 @@ check_ip_in_use "192.168.5.$d2"
 #   ethernets:
 #     ens192:
 #       addresses:
-#       - 192.168.$c.$d1/24
+#       - 192.168.1.$d1/24
 #       nameservers:
 #         addresses:
 #         - 1.1.1.1
