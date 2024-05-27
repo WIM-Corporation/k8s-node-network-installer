@@ -77,5 +77,5 @@ network:
   version: 2
 EOF
 
-# # Apply the Netplan configuration
-# sudo netplan try && sudo netplan apply
+# Apply the Netplan configuration
+sudo netplan try && sudo netplan apply
