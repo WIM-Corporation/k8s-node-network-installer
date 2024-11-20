@@ -12,16 +12,20 @@ validate_ip_octet() {
 # Function to check if an IP is free using arp-scan
 check_ip_free() {
   local ip=$1
-  local subnet=$2
-  echo "Scanning $ip in subnet $subnet..."
-  # Use arp-scan to check if the IP is in use
-  if sudo arp-scan -I ens192 "$ip" | grep -q "$ip"; then
+  local interface=$2
+  
+  echo "Scanning IP $ip on interface $interface..."
+  
+  # Run arp-scan and check for the specific IP in the output
+  if sudo arp-scan -I "$interface" "$ip" | awk '{print $1}' | grep -qw "$ip"; then
     echo "IP $ip is in use."
     return 1 # IP is in use
+  else
+    echo "IP $ip is free."
+    return 0 # IP is free
   fi
-  echo "IP $ip is free."
-  return 0 # IP is free
 }
+
 
 # Function to find the first free IP in a subnet
 find_free_ip() {
