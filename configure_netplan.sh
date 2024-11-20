@@ -20,7 +20,7 @@ check_ip_free() {
 find_free_ip() {
   local subnet=$1
   local interface=$2
-  for i in {100..254}; do
+  for i in {110..254}; do
     local ip="$subnet.$i"
     if ! check_ip_free "$ip" "$interface"; then
       echo "$ip"
