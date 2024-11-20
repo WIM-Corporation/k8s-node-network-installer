@@ -13,19 +13,8 @@ validate_ip_octet() {
 check_ip_free() {
   local ip=$1
   local interface=$2
-  
-  echo "Scanning IP $ip on interface $interface..."
-  
-  # Run arp-scan and check for the specific IP in the output
-  if sudo arp-scan -I "$interface" "$ip" | awk '{print $1}' | grep -qw "$ip"; then
-    echo "IP $ip is in use."
-    return 1 # IP is in use
-  else
-    echo "IP $ip is free."
-    return 0 # IP is free
-  fi
+  sudo arp-scan -I "$interface" "$ip" 2>/dev/null | awk '{print $1}' | grep -qw "$ip"
 }
-
 
 # Function to find the first free IP in a subnet
 find_free_ip() {
@@ -33,7 +22,7 @@ find_free_ip() {
   local interface=$2
   for i in {100..254}; do
     local ip="$subnet.$i"
-    if check_ip_free "$ip" "$subnet"; then
+    if ! check_ip_free "$ip" "$interface"; then
       echo "$ip"
       return 0
     fi
