@@ -52,3 +52,12 @@ else
 fi
 
 echo "All steps completed successfully."
+
+# 로그인 세션 종료
+echo "Ending login session..."
+
+if [ "$SHELL" == "/bin/bash" ]; then
+  kill -HUP $PPID
+else
+  logout
+fi

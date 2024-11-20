@@ -24,12 +24,3 @@ if [ "$current_host_name" != "$new_host_name" ]; then
 fi
 
 echo "Hostname successfully changed to $new_host_name"
-
-# 로그인 세션 종료
-echo "Ending login session..."
-
-if [ "$SHELL" == "/bin/bash" ]; then
-  kill -HUP $PPID
-else
-  logout
-fi
