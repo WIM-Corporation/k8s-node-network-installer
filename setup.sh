@@ -33,14 +33,15 @@ else
   exit 1
 fi
 
-# Step 2: Install OpenSSH Server
-echo "Executing install_openssh_server.sh..."
-if ./install_openssh_server.sh; then
-  echo "OpenSSH Server installation completed successfully."
-else
-  echo "Failed to install OpenSSH Server."
-  exit 1
-fi
+# 설치된 base image 사용
+# # Step 2: Install OpenSSH Server
+# echo "Executing install_openssh_server.sh..."
+# if ./install_openssh_server.sh; then
+#   echo "OpenSSH Server installation completed successfully."
+# else
+#   echo "Failed to install OpenSSH Server."
+#   exit 1
+# fi
 
 # Step 3: Update Hostname
 echo "Executing update_hostname.sh..."
