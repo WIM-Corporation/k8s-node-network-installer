@@ -9,22 +9,27 @@ validate_ip_octet() {
   fi
 }
 
-# Function to check if an IP is in use (ARPing as default)
+# Function to check if an IP is free using arp-scan
 check_ip_free() {
   local ip=$1
-  # Use arping or fallback to ping if arping fails
-  if arping -c 1 -w 1 "$ip" > /dev/null 2>&1; then
+  local subnet=$2
+  echo "Scanning $ip in subnet $subnet..."
+  # Use arp-scan to check if the IP is in use
+  if sudo arp-scan -I ens192 "$ip" | grep -q "$ip"; then
+    echo "IP $ip is in use."
     return 1 # IP is in use
   fi
+  echo "IP $ip is free."
   return 0 # IP is free
 }
 
 # Function to find the first free IP in a subnet
 find_free_ip() {
   local subnet=$1
-  for i in {110..254}; do
+  local interface=$2
+  for i in {100..254}; do
     local ip="$subnet.$i"
-    if check_ip_free "$ip"; then
+    if check_ip_free "$ip" "$subnet"; then
       echo "$ip"
       return 0
     fi
@@ -39,13 +44,20 @@ if [ "$#" -ne 0 ]; then
   exit 1
 fi
 
-# Define subnets
+# Define subnets and interface
 subnet1="192.168.1"
 subnet2="192.168.5"
+interface="ens192"  # Update this if your network interface differs
+
+# Ensure `arp-scan` is installed
+if ! command -v arp-scan &> /dev/null; then
+  echo "arp-scan is not installed. Installing..."
+  sudo apt update && sudo apt install -y arp-scan
+fi
 
 # Find free IPs in each subnet
-free_ip1=$(find_free_ip "$subnet1")
-free_ip2=$(find_free_ip "$subnet2")
+free_ip1=$(find_free_ip "$subnet1" "$interface")
+free_ip2=$(find_free_ip "$subnet2" "$interface")
 
 # Generate Netplan configuration files
 cat <<EOF | sudo tee /etc/netplan/01-ens192-installer-config.yaml > /dev/null
