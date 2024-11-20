@@ -70,10 +70,10 @@ network:
       id: 5
       link: ens192
       addresses: [192.168.5.$d2/24]
-      routes:
-        - to: 0.0.0.0/0
-          via: 192.168.5.1
-          metric: 100
+      # routes:
+      #   - to: 0.0.0.0/0
+      #     via: 192.168.5.1
+      #     metric: 100
   version: 2
 EOF
 
