@@ -22,7 +22,7 @@ check_ip_free() {
 # Function to find the first free IP in a subnet
 find_free_ip() {
   local subnet=$1
-  for i in {1..254}; do
+  for i in {110..254}; do
     local ip="$subnet.$i"
     if check_ip_free "$ip"; then
       echo "$ip"
