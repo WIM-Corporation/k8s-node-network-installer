@@ -33,7 +33,7 @@ else
   exit 1
 fi
 
-# 설치된 base image 사용
+# openssh server 가 설치된 vm 템플릿 사용 중
 # # Step 2: Install OpenSSH Server
 # echo "Executing install_openssh_server.sh..."
 # if ./install_openssh_server.sh; then

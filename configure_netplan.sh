@@ -42,12 +42,6 @@ subnet1="192.168.1"
 subnet2="192.168.5"
 interface="ens192"  # Update this if your network interface differs
 
-# Ensure `arp-scan` is installed
-if ! command -v arp-scan &> /dev/null; then
-  echo "arp-scan is not installed. Installing..."
-  sudo apt update && sudo apt install -y arp-scan
-fi
-
 # Find free IPs in each subnet
 free_ip1=$(find_free_ip "$subnet1" "$interface")
 free_ip2=$(find_free_ip "$subnet2" "$interface")

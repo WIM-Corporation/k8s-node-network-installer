@@ -1,25 +1,18 @@
 # k8s-node-network-installer
 
-https://github.com/WIM-Corporation/k8s-node-network-installer.git
+쿠버네티스 노드의 네트워크 설정을 초기화 하는 스크립트
 
-Initializes a k8s node network configuration.
+- ~vSphere 의 템플릿으로 VM 생성~
+- `네트워크 설정 초기화`
+- ~Ansible 로 쿠버네티스 클러스터 join~
 
-## Set netplan
+> network interface: ens192
+> vlan: 5
+>
+> 위 설정에 맞춰서 작성되었으며, 환경에 맞게 수정해서 사용
 
-```bash
-./configure_netplan.sh 192.168.1.<d-record-1> 192.168.5.<d-record-2>
+## run
+
+```sh
+./setup.sh <HOST_NAME>
 ```
-
-## Install openssh server
-
-```bash
-./install_openssh_server.sh
-```
-
-## Update hostname
-
-```bash
-./update-hostname.sh <new_hostname>
-```
-
-If the hostname is successfully changed, the login session will be terminated.
